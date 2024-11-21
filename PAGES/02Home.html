@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/02Home.css" />
+    <!-- Caminho correto para o CSS -->
+    <title>Home</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <div class="logo-box">
+          <img src="../IMG/LOGO SEM FUNDO.webp" alt="Logo da Faculdade" class="logo"/>
+        </div>
+        <ul class="menu">
+          <li><a href="02Home.html">HOME</a></li>
+          <li><a href="03CadastroDeAulas.html">Cadastro de Aulas</a></li>
+          <li><a href="04AulasCadastradas.html">Aulas Cadastradas</a></li>
+          <li><a href="05Propagandas.html">Propagandas</a></li>
+          <li><a href="06AulasCalouros.html">Aulas Calouros</a></li>
+          <li><a href="07AulasVeteranos.html">Aulas Veteranos</a></li>
+          <li><a href="#" id="logoutButton">SAIR</a></li>
+        </ul>
+      </nav>
+    </div>
+    <script src="../Js/02Home.js"></script>
+    <script>
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          logout();
+        });
+    </script>
+  </body>
+</html>

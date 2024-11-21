@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/03CadastroDeAulas.css" />
+    <title>Cadastro de Aulas</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="logo-box">
+          <img
+            src="../IMG/LOGO SEM FUNDO.webp"
+            alt="Logo da Faculdade"
+            class="logo"
+          />
+        </div>
+        <ul class="menu">
+          <li><a href="02Home.html">HOME</a></li>
+          <li><a href="03CadastroDeAulas.html">Cadastro de Aulas</a></li>
+          <li><a href="04AulasCadastradas.html">Aulas Cadastradas</a></li>
+          <li><a href="05Propagandas.html">Propagandas</a></li>
+          <li><a href="06AulasCalouros.html">Aulas Calouros</a></li>
+          <li><a href="07AulasVeteranos.html">Aulas Veteranos</a></li>
+          <li><a href="#" id="logoutButton">SAIR</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Cadastre Sua Aula:</h1>
+        <form id="formCadastro" onsubmit="return cadastrarAula(event);">
+          <label for="data">DATA:</label>
+          <input type="date" id="data" name="data" required />
+
+          <label for="turno">TURNO:</label>
+          <select id="turno" name="turno" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="manhã">Manhã</option>
+            <option value="tarde">Tarde</option>
+            <option value="noite">Noite</option>
+          </select>
+
+          <label for="curso">CURSO:</label>
+          <select id="curso" name="curso" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="administracao">ADMINISTRAÇÃO</option>
+            <option value="analise_e_desenvolvimento_de_sistemas">
+              ANALISE E DESENVOLVIMENTO DE SISTEMAS
+            </option>
+            <option value="arquitetura">ARQUITETURA E URBANISMO</option>
+            <option value="biomedicina">BIOMEDICINA</option>
+            <option value="ciencias_contabeis">CIÊNCIAS CONTÁBEIS</option>
+            <option value="direito">DIREITO</option>
+            <option value="educacao_fisica_bacharelado">
+              EDUCAÇÃO FÍSICA - BACHARELADO
+            </option>
+            <option value="educacao_fisica_licenciatura">
+              EDUCAÇÃO FÍSICA - LICENCIATURA
+            </option>
+            <option value="enfermagem">ENFERMAGEM</option>
+            <option value="engenharia_civil">ENGENHARIA CIVIL</option>
+            <option value="estetica_cosmetica">ESTÉTICA E COSMÉTICA</option>
+            <option value="farmacia">FARMÁCIA</option>
+            <option value="fisioterapia">FISIOTERAPIA</option>
+            <option value="gestao_recursos_humanos">
+              GESTÃO DE RECURSOS HUMANOS
+            </option>
+            <option value="medicina_veterinaria">MEDICINA VETERINÁRIA</option>
+            <option value="nutricao">NUTRIÇÃO</option>
+            <option value="odontologia">ODONTOLOGIA</option>
+            <option value="psicologia">PSICOLOGIA</option>
+          </select>
+
+          <label for="disciplina">DISCIPLINA:</label>
+          <input type="text" id="disciplina" name="disciplina" required />
+
+          <label for="safra">SAFRA:</label>
+          <select id="safra" name="safra" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="calouro">Calouro</option>
+            <option value="veterano">Veterano</option>
+          </select>
+
+          <label for="modalidade">MODALIDADE:</label>
+          <select id="modalidade" name="modalidade" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="presencial">Presencial</option>
+            <option value="semi_presencial">Semi-Presencial</option>
+            <option value="ead">EAD</option>
+            <option value="flex">FLEX</option>
+          </select>
+
+          <label for="professor">PROFESSOR(A):</label>
+          <input type="text" id="professor" name="professor" required />
+
+          <label for="sala">SALA/ANDAR:</label>
+          <input type="text" id="sala" name="sala" required />
+
+          <button type="submit">Cadastrar</button>
+        </form>
+        <div id="mensagem" class="mensagem"></div>
+      </div>
+    </div>
+
+    <script>
+      function cadastrarAula(event) {
+        event.preventDefault();
+
+        const formData = new FormData(document.getElementById("formCadastro"));
+
+        fetch("../PHP/cadastrar_aula.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("mensagem").innerHTML = data;
+            document.getElementById("formCadastro").reset();
+          })
+          .catch((error) => {
+            console.error("Erro:", error);
+            document.getElementById("mensagem").innerHTML =
+              "Ocorreu um erro ao cadastrar a aula.";
+          });
+      }
+
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          logout();
+        });
+    </script>
+  </body>
+</html>

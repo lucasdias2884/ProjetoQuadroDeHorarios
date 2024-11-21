@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/01Login&Cadastro.css">
+    <title>LOGIN</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form id="formCadastro" method="POST">
+                <h1>Cadastre-se</h1>
+                <span>Preencha todos os campos abaixo para se cadastrar.</span>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                <label for="matricula">Matrícula:</label>
+                <input type="number" id="matricula" name="matricula" placeholder="Digite sua matrícula" required>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha." required>
+                <label for="confSenha">Confirme a Senha:</label>
+                <input type="password" id="confSenha" name="confSenha" placeholder="Confirme sua senha." required>
+                <button type="submit">CADASTRAR</button>
+            </form>
+            <div id="mensagem"></div>
+        </div>
+        <div class="form-container sign-in">
+            <form id="formLogin" method="POST">
+                <h1>LOGIN</h1>
+                <span>Insira sua matrícula e sua senha para entrar.</span>
+                <label for="matricula-login">Matrícula:</label>
+                <input type="number" id="matricula-login" name="matricula" placeholder="Digite sua matrícula" required>
+                <label for="senha-login">Senha:</label>
+                <input type="password" id="senha-login" name="senha" placeholder="Digite sua senha." required>
+                <a href="#">Esqueceu sua senha? Clique aqui.</a>
+                <button type="submit">ENTRAR</button>
+            </form>
+            <div id="mensagem-login"></div>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Bem Vindo de Volta!</h1>
+                    <p>Insira seus dados para ENTRAR.</p>
+                    <button type="button" class="hidden" id="login">LOGIN</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Olá!</h1>
+                    <p>Ainda não é cadastrado?</p>
+                    <button type="button" class="hidden" id="register">CADASTRE-SE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="logo-box">
+        <img src="../IMG/LOGO SEM FUNDO.webp" alt="Logo Estácio" class="logo">
+    </div>
+    <script src="../Js/01Login&Cadastro.js"></script>
+</body>
+</html>

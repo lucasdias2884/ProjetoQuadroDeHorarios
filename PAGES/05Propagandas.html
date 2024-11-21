@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/05Propagandas.css" />
+    <title>Propagandas</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="logo-box">
+          <img
+            src="../IMG/LOGO SEM FUNDO.webp"
+            alt="Logo da Faculdade"
+            class="logo"
+          />
+        </div>
+        <ul class="menu">
+          <li><a href="02Home.html">HOME</a></li>
+          <li><a href="03CadastroDeAulas.html">Cadastro de Aulas</a></li>
+          <li><a href="04AulasCadastradas.html">Aulas Cadastradas</a></li>
+          <li><a href="05Propagandas.html">Propagandas</a></li>
+          <li><a href="06AulasCalouros.html">Aulas Calouros</a></li>
+          <li><a href="07AulasVeteranos.html">Aulas Veteranos</a></li>
+          <li><a href="#" id="logoutButton">SAIR</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Cadastrar Propaganda:</h1>
+        <form id="formCadastro" onsubmit="return cadastrarPropaganda(event);">
+          <label for="nome">NOME:</label>
+          <input type="text" id="nome" name="nome" required />
+
+          <label for="imagem">IMAGEM:</label>
+          <input
+            type="file"
+            id="imagem"
+            name="imagem"
+            accept="image/jpeg, image/png"
+            required
+          />
+
+          <button type="submit">Cadastrar</button>
+        </form>
+        <div id="mensagem" class="mensagem"></div>
+        <h2>Propagandas Cadastradas:</h2>
+        <div id="cardsContainer" class="cards-container">
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function cadastrarPropaganda(event) {
+        event.preventDefault();
+
+        const formData = new FormData(document.getElementById("formCadastro"));
+
+        try {
+          const response = await fetch("../PHP/cadastrar_propaganda.php", {
+            method: "POST",
+            body: formData,
+          });
+          const data = await response.json();
+
+          if (data.id) {
+            const container = document.getElementById("cardsContainer");
+            const div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML = `
+                        <h2>${data.nome}</h2>
+                        <img src="../IMG/propagandas/${data.imagem}" alt="${data.nome}" style="width: 100%; height: auto;">
+                        <button onclick="excluirPropaganda(${data.id})">Excluir</button>
+                    `;
+            container.appendChild(div);
+            document.getElementById("mensagem").innerHTML =
+              "Propaganda cadastrada com sucesso!";
+          } else {
+            document.getElementById("mensagem").innerHTML =
+              "Erro ao cadastrar propaganda.";
+          }
+          document.getElementById("formCadastro").reset();
+        } catch (error) {
+          console.error("Erro:", error);
+          document.getElementById("mensagem").innerHTML =
+            "Ocorreu um erro ao cadastrar a propaganda.";
+        }
+      }
+
+      async function carregarPropagandas() {
+        try {
+          const response = await fetch("../PHP/getPropagandas.php");
+          const data = await response.json();
+          const container = document.getElementById("cardsContainer");
+          container.innerHTML = "";
+
+          if (data.length === 0) {
+            container.innerHTML = "<p>Nenhuma propaganda cadastrada.</p>";
+            return;
+          }
+
+          data.forEach((propaganda) => {
+            const div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML = `
+                        <h2>${propaganda.nome}</h2>
+                        <img src="../IMG/propagandas/${propaganda.imagem}" alt="${propaganda.nome}" style="width: 100%; height: auto;">
+                        <button onclick="excluirPropaganda(${propaganda.id})">Excluir</button>
+                    `;
+            container.appendChild(div);
+          });
+        } catch (error) {
+          console.error("Erro ao carregar propagandas:", error);
+        }
+      }
+
+      async function excluirPropaganda(id) {
+        try {
+          const response = await fetch(`../PHP/deletePropaganda.php?id=${id}`, {
+            method: "DELETE",
+          });
+          const data = await response.text();
+          document.getElementById("mensagem").innerHTML = data;
+          carregarPropagandas();
+        } catch (error) {
+          console.error("Erro ao excluir propaganda:", error);
+          document.getElementById("mensagem").innerHTML =
+            "Ocorreu um erro ao excluir a propaganda.";
+        }
+      }
+
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          logout();
+        });
+
+      window.onload = carregarPropagandas;
+    </script>
+  </body>
+</html>

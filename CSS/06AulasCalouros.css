@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../IMG/LOGO SEM FUNDO.webp');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.cards-container {
+  position: absolute;
+  display: flex;
+  height: 50%;
+  width: 100%;
+}
+
+#topRow {
+  position: absolute;
+  top: 0;
+  animation: scrollTop linear infinite;
+}
+
+#bottomRow {
+  position: absolute;
+  bottom: 0;
+  animation: scrollBottom linear infinite;
+}
+
+@keyframes scrollTop {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scrollBottom {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+.card {
+  min-width: 200px;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 20px;
+  line-height: 2.5;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+}
